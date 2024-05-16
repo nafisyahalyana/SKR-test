@@ -11,16 +11,19 @@ class Booking extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var string
+     * @var string 
+     * 
      */
     protected $table = 'booking';
     // protected $fillable = [
-    //     'nama',
-    //     'bidang', 
-    //     'no_hp', 
-    //     'tanggal', 
-    //     'waktu_mulai', 
-    //     'waktu_berakhir', 
-    //     'keperluan'
+    //     'id',
+    //     'ruangan'
     // ];
+    public function ruangan()
+    {
+        return $this->belongsTo(Ruangan::class);
+    }
+    
 }
+
+

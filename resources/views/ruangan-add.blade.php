@@ -1,3 +1,12 @@
+{{-- <div class="mt-5 col-8 m-auto">
+    <form action="">
+        <div class="mb-3">
+            <label for="ruangan">Ruangan</label>
+            <input type="text" class="form-control" id="ruangan" required>
+        </div>
+    </form>
+    <!-- Be present above all else. - Naval Ravikant -->
+</div> --}}
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
   <head>
@@ -14,7 +23,7 @@
       content="Matrix Admin Lite Free Version is powerful and clean admin dashboard template, inpired from Bootstrap Framework"
     />
     <meta name="robots" content="noindex,nofollow" />
-    <title>SIRUANG | Pengguna</title>
+    <title>SIRUANG | Ruangan</title>
     <!-- Favicon icon -->
     <link
       rel="icon"
@@ -190,18 +199,20 @@
                   class="dropdown-menu dropdown-menu-end user-dd animated"
                   aria-labelledby="navbarDropdown"
                 >
-                  <div class="dropdown-divider"></div>
-                  <span class="dropdown-item-text">Hallo, {{ Auth::user()->name }}! anda {{ Auth::user()->role->name }}</span>
-                  <a class="dropdown-item" href="javascript:void(0)" onclick="logout()">
-                    <i class="fa fa-power-off me-1 ms-1"></i> Logout
-                  </a>
+                <div class="dropdown-divider"></div>
+                <span class="dropdown-item-text">Hallo, {{ Auth::user()->name }}! anda {{ Auth::user()->role->name }}</span>
+                <a class="dropdown-item" href="javascript:void(0)" onclick="logout()">
+                  <i class="fa fa-power-off me-1 ms-1"></i> Logout
+                </a>
                 
-                  <script>
-                    function logout() {
-                    // Redirect ke halaman login
-                    window.location.href = "/";
-                    }
-                  </script>
+                <script>
+                function logout() {
+                  // Redirect ke halaman login
+                  window.location.href = "/";
+                }
+                </script>
+                
+                  
                 </ul>
               </li>
               <!-- ============================================================== -->
@@ -251,7 +262,7 @@
         <div class="page-breadcrumb">
           <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-              <h4 class="page-title">Pengguna</h4>
+              <h4 class="page-title">Tambah Data</h4>
               <div class="ms-auto text-end">
                 <nav aria-label="breadcrumb">
                   <ol class="breadcrumb">
@@ -275,45 +286,23 @@
           <!-- ============================================================== -->
           <!-- Start Page Content -->
           <!-- ============================================================== -->
-          <div class="row">
-            <div class="col-12">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title mb-0">Tabel User</h5>
-                </div>
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">No</th>
-                      <th scope="col">Nama</th>
-                      <th scope="col">Email</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach( $data as $d)
-                    <tr>
-                        <th>{{ $loop->iteration }}</th>
-                        <td>{{ $d->name }}</td>
-                        <td>{{ $d->email }}</td>
-                      </tr>
-                    @endforeach
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-          <!-- ============================================================== -->
-          <!-- End PAge Content -->
+          <div class="mt-5 col-5 m-auto">
+    <form action="/ruangan" method="POST">
+        @csrf
+        <div class="mb-3">
+            <label for="ruangan">Ruangan</label>
+            <input type="text" name="ruangan" class="form-control" placeholder="ruangan" id="ruangan"  required>
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-success" type="submit">Simpan</button>
+
+        </div>
+    </form>
+    <!-- Be present above all else. - Naval Ravikant -->
+</div>
         </div>
       </div>
-      <!-- ============================================================== -->
-      <!-- End Page wrapper  -->
-      <!-- ============================================================== -->
     </div>
-    <!-- ============================================================== -->
-    <!-- End Wrapper -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
     <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
@@ -328,16 +317,7 @@
     <script src="../dist/js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
     <script src="../dist/js/custom.min.js"></script>
-    <!-- this page js -->
-    <script src="../assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
-    <script src="../assets/extra-libs/multicheck/jquery.multicheck.js"></script>
-    <script src="../assets/extra-libs/DataTables/datatables.min.js"></script>
-    <script>
-      /****************************************
-       *       Basic Table                   *
-       ****************************************/
-      $("#zero_config").DataTable();
-    </script>
+    
   </body>
 
 </html>

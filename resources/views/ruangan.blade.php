@@ -88,14 +88,6 @@
                   width="115"
                 />
               </span>
-              <!-- Logo icon -->
-              <!-- <b class="logo-icon"> -->
-              <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-              <!-- Dark Logo icon -->
-              <!-- <img src="../assets/images/logo-text.png" alt="homepage" class="light-logo" /> -->
-
-              <!-- </b> -->
-              <!--End Logo icon -->
             </a>
             <!-- ============================================================== -->
             <!-- End Logo -->
@@ -169,8 +161,6 @@
                 </a>
                
               </li>
-              
-
               <!-- ============================================================== -->
               <!-- User profile and search -->
               <!-- ============================================================== -->
@@ -201,6 +191,7 @@
                   aria-labelledby="navbarDropdown"
                 >
                 <div class="dropdown-divider"></div>
+                <span class="dropdown-item-text">Hallo, {{ Auth::user()->name }}! anda {{ Auth::user()->role->name }}</span>
                 <a class="dropdown-item" href="javascript:void(0)" onclick="logout()">
                   <i class="fa fa-power-off me-1 ms-1"></i> Logout
                 </a>
@@ -290,14 +281,26 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title mb-0">Tabel Ruangan</h5>
+                  <h5 class="card-title mb-2">Tabel Ruangan</h5>
+                  @if(Auth::user()->role_id != 1)
+                  @else
+                  <div>
+                    <td>
+                      <a href="ruangan-add"class="btn btn-success btn-sm text-white"><i class="mdi mdi-plus">Tambah</i></a>
+                    </td>
+                  </div>
+                  @endif
                 </div>
                 <table class="table">
                   <thead>
                     <tr>
-                      <th scope="col">No</th>
+                      <th scope="col" style="padding-right: 10px">No</th>
                       <th scope="col">Ruangan</th>
+
+                      @if(Auth::user()->role_id != 1)
+                      @else
                       <th scope="col">Action</th>
+                      @endif
                     </tr>
                   </thead>
                   <tbody>
@@ -305,12 +308,13 @@
                         <tr>
                             <th>{{ $loop->iteration }}</th>
                             <td>{{ $d->ruangan }}</td>
-                        
+                            @if(Auth::user()->role_id != 1)
+                            @else
                             <td>
-                                <a href="" class="btn btn-primary"><i class="fas fa-pen"></i> Edit</a>
-                                <a href="" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Hapus</a>
-
+                                <a href="ruangan-edit/{{ $d->id }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                <a href="ruangan-delete/{{ $d->id }}" class="btn btn-danger" onclick="return confirm('Apakah anda yakin untuk menghapus data?')"><i class="fas fa-trash-alt"></i></a>
                             </td>
+                            @endif
                         </tr>
                     @endforeach
                   </tbody>

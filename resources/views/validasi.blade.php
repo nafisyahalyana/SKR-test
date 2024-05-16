@@ -5,7 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SIRUANG | Dashboard</title>
+    <meta
+      name="keywords"
+      content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 5 admin, bootstrap 5, css3 dashboard, bootstrap 5 dashboard, Matrix lite admin bootstrap 5 dashboard, frontend, responsive bootstrap 5 admin template, Matrix admin lite design, Matrix admin lite dashboard bootstrap 5 dashboard template"
+    />
+    <meta
+      name="description"
+      content="Matrix Admin Lite Free Version is powerful and clean admin dashboard template, inpired from Bootstrap Framework"
+    />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>SIRUANG | Validasi</title>
     <!-- Favicon icon -->
     <link
       rel="icon"
@@ -17,12 +26,6 @@
     <link href="{{ asset('../assets/libs/flot/css/float-chart.css') }}" rel="stylesheet" />
     <!-- Custom CSS -->
     <link href="{{ asset('../dist/css/style.min.css') }}" rel="stylesheet" />
-    <link
-      href="../assets/libs/fullcalendar/dist/fullcalendar.min.css"
-      rel="stylesheet"
-    />
-    <link href="../assets/extra-libs/calendar/calendar.css" rel="stylesheet" />
-    <link href="../dist/css/style.min.css" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -30,6 +33,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
+
   <body>
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
@@ -155,7 +159,10 @@
                 >
                   <i class="mdi mdi-bell font-24"></i>
                 </a>
+               
               </li>
+              
+
               <!-- ============================================================== -->
               <!-- User profile and search -->
               <!-- ============================================================== -->
@@ -186,7 +193,7 @@
                   aria-labelledby="navbarDropdown"
                 >
                 <div class="dropdown-divider"></div>
-                <span class="dropdown-item-text">Hallo, {{ Auth::user()->name }}! anda {{ Auth::user()->role->name }}</span>
+                <span class="dropdown-item-text">Hallo, {{ Auth::user()->name }}! anda {{ Auth::user()->role ->name }}</span>
                 <a class="dropdown-item" href="javascript:void(0)" onclick="logout()">
                   <i class="fa fa-power-off me-1 ms-1"></i> Logout
                 </a>
@@ -197,6 +204,8 @@
                   window.location.href = "/";
                 }
                 </script>
+                
+                  
                 </ul>
               </li>
               <!-- ============================================================== -->
@@ -246,7 +255,7 @@
         <div class="page-breadcrumb">
           <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-              <h4 class="page-title">Dashboard</h4>
+              <h4 class="page-title">Validasi</h4>
               <div class="ms-auto text-end">
                 <nav aria-label="breadcrumb">
                   <ol class="breadcrumb">
@@ -268,249 +277,56 @@
         <!-- ============================================================== -->
         <div class="container-fluid">
           <!-- ============================================================== -->
-          <!-- Sales Cards  -->
+          <!-- Start Page Content -->
           <!-- ============================================================== -->
           <div class="row">
-            <!-- Column -->
-            @if(Auth::user()->role_id != 1)
-            @else
-            <div class="col-md-6 col-lg-3 col-xlg-3">
-              <div class="card card-hover">
-                <div class="box bg-success ">
-                  <h1 class="font-light text-white align-right">
-                    <i class="mdi mdi-account-plus"></i>
-                  </h1>
-                  <h6 class="text-white text-decoration: none"><a href="pengguna" style="color:white">Pengguna</a></h6>
-                  {{-- <p class="text-white redup text-right" style="font-size: 24px; opacity: 0.7;">{{ $data }}</p> --}}
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title mb-0">Tabel Booking</h5>
                 </div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">No</th>
+                      <th scope="col">Nama</th>
+                      <th scope="col">Bidang</th>
+                      <th scope="col">No HP</th>
+                      <th scope="col">Tanggal</th>
+                      <th scope="col">Waktu Mulai</th>
+                      <th scope="col">Waktu Berakhir</th>
+                      <th scope="col">Ruangan</th>
+                      <th scope="col">Keperluan</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach( $data as $d)
+                    <tr>
+                        <th>{{ $loop->iteration }}</th>
+                        <td>{{ $d->nama }}</td>
+                        <td>{{ $d->bidang }}</td>
+                        <td>{{ $d->no_hp }}</td>
+                        <td>{{ $d->tanggal }}</td>
+                        <td>{{ $d->waktu_mulai }}</td>
+                        <td>{{ $d->waktu_berakhir }}</td>
+                        <td>{{ $d->ruangan }}</td>
+                        <td>{{ $d->keperluan }}</td>
+                        <td>
+                            <a href="validasi-edit/{{ $d->id }}" class="btn btn-primary"><i class="far fa-edit"></i></a>
+                            <a href="validasi-delete/{{ $d->id }}" class="btn btn-danger" onclick="return confirm('Apakah anda yakin untuk menghapus data?')"><i class="fas fa-trash-alt"></i></a>
+                            <a href="https://api.whatsapp.com/send?phone={{ $d->no_hp }}&text=Halo,{{ $d->nama }}%20saya%20tertarik%20dengan%20produk%20anda" class="btn btn-success mb-2"><i class="fab fa-whatsapp"></i></a>
+
+                        </td>
+                      </tr>
+                    @endforeach
+                    
+                    
+                    
+                  </tbody>
+                </table>
               </div>
-            </div>
-            @endif
-            <!-- Column -->
-            <div class="col-md-6 col-lg-3 col-xlg-3">
-              <div class="card card-hover">
-                <div class="box bg-warning">
-                  <h1 class="font-light text-white">
-                    <i class="mdi mdi-collage"></i>
-                  </h1>
-                  <h6 class="text-white redup text-decoration: none"><a href="ruangan" style="color:white">Ruangan</a></h6>
-                </div>
-              </div>
-            </div>
-            <!-- Column -->
-            <div class="col-md-6 col-lg-3 col-xlg-3">
-              <div class="card card-hover">
-                <div class="box bg-danger">
-                  <h1 class="font-light text-white">
-                    <i class="mdi mdi-border-outside"></i>
-                  </h1>
-                  <h6 class="text-white text-decoration: none"><a href="peminjaman" style="color:white">Peminjaman</a></h6>
-                </div>
-              </div>
-            </div>
-            <!-- Column -->
-            <div class="col-md-6 col-lg-3 col-xlg-3">
-              <div class="card card-hover">
-                <div class="box bg-info">
-                  <h1 class="font-light text-white">
-                    <i class="mdi mdi-arrow-all"></i>
-                  </h1>
-                  <h6 class="text-white"><a href="jadwal" style="color:white">Jadwal</a></h6>
-                </div>
-              </div>
-            </div>
-            <!-- Column -->
-          </div>
-          <div class="col-md-12">
-            <div class="card">
-              <div class="">
-                <div class="row">
-                  <div class="col-lg-3 border-right pe-0">
-                    <div class="card-body border-bottom">
-                      <h4 class="card-title mt-2">Drag & Drop Event</h4>
-                    </div>
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-md-12">
-                          <div id="calendar-events" class="">
-                            <div
-                              class="calendar-events mb-3"
-                              data-class="bg-info"
-                            >
-                              <i class="fa fa-circle text-info me-2"></i>Event
-                              One
-                            </div>
-                            <div
-                              class="calendar-events mb-3"
-                              data-class="bg-success"
-                            >
-                              <i class="fa fa-circle text-success me-2"></i>
-                              Event Two
-                            </div>
-                            <div
-                              class="calendar-events mb-3"
-                              data-class="bg-danger"
-                            >
-                              <i class="fa fa-circle text-danger me-2"></i
-                              >Event Three
-                            </div>
-                            <div
-                              class="calendar-events mb-3"
-                              data-class="bg-warning"
-                            >
-                              <i class="fa fa-circle text-warning me-2"></i
-                              >Event Four
-                            </div>
-                          </div>
-                          <!-- checkbox -->
-                          <div class="form-check">
-                            <input
-                              type="checkbox"
-                              class="form-check-input"
-                              id="drop-remove"
-                            />
-                            <label class="cform-check-label" for="drop-remove"
-                              >Remove after drop</label
-                            >
-                          </div>
-                          <a
-                            href="javascript:void(0)"
-                            data-toggle="modal"
-                            data-target="#add-new-event"
-                            class="
-                              d-flex
-                              align-items-center
-                              justify-content-center
-                              btn
-                              mt-3
-                              btn-info
-                              d-block
-                              waves-effect waves-light
-                            "
-                          >
-                            <i class="mdi mdi-plus fs-4 me-1"></i> Add New
-                            Event
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-9">
-                    <div class="card-body b-l calender-sidebar">
-                      <div id="calendar"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal none-border" id="my-event">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h4 class="modal-title"><strong>Add Event</strong></h4>
-                  <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-hidden="true"
-                  >
-                    &times;
-                  </button>
-                </div>
-                <div class="modal-body"></div>
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-secondary waves-effect"
-                    data-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-success save-event waves-effect waves-light"
-                  >
-                    Create event
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-danger delete-event waves-effect waves-light"
-                    data-dismiss="modal"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal fade none-border" id="add-new-event">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h4 class="modal-title"><strong>Add</strong> a category</h4>
-                  <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-hidden="true"
-                  >
-                    &times;
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <form>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label class="control-label">Category Name</label>
-                        <input
-                          class="form-control form-white"
-                          placeholder="Enter name"
-                          type="text"
-                          name="category-name"
-                        />
-                      </div>
-                      <div class="col-md-6">
-                        <label class="control-label"
-                          >Choose Category Color</label
-                        >
-                        <select
-                          class="form-select shadow-none form-white"
-                          data-placeholder="Choose a color..."
-                          name="category-color"
-                        >
-                          <option value="success">Success</option>
-                          <option value="danger">Danger</option>
-                          <option value="info">Info</option>
-                          <option value="primary">Primary</option>
-                          <option value="warning">Warning</option>
-                          <option value="inverse">Inverse</option>
-                        </select>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="
-                      btn btn-danger
-                      waves-effect waves-light
-                      save-category
-                    "
-                    data-dismiss="modal"
-                  >
-                    Save
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-secondary waves-effect"
-                    data-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                </div>
-              </div>
+              
             </div>
           </div>
         </div>
@@ -525,33 +341,29 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    <script src="{{ asset('../assets/libs/jquery/dist/jquery.min.js') }}"></script>
-    <script src="{{ asset('/dist/js/jquery.ui.touch-punch-improved.js') }}"></script>
-    <script src="{{ asset('/dist/js/jquery-ui.min.js') }}"></script>
+    <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
-    <script src="{{ asset('../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('../assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js') }}"></script>
-    <script src="{{ asset('../assets/extra-libs/sparkline/sparkline.js') }}"></script>
+    <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="../assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="../assets/extra-libs/sparkline/sparkline.js"></script>
     <!--Wave Effects -->
-    <script src="{{ asset('../dist/js/waves.js') }}"></script>
+    <script src="../dist/js/waves.js"></script>
     <!--Menu sidebar -->
-    <script src="{{ asset('../dist/js/sidebarmenu.js') }}"></script>
+    <script src="../dist/js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
-    <script src="{{ asset('../dist/js/custom.min.js') }}"></script>
-    <!--This page JavaScript -->
-    <!-- <script src="../dist/js/pages/dashboards/dashboard1.js"></script> -->
-    <!-- Charts js Files -->
-    <script src="{{ asset('../assets/libs/flot/excanvas.js') }}"></script>
-    <script src="{{ asset('../assets/libs/flot/jquery.flot.js') }}"></script>
-    <script src="{{ asset('../assets/libs/flot/jquery.flot.pie.js') }}"></script>
-    <script src="{{ asset('../assets/libs/flot/jquery.flot.time.js') }}"></script>
-    <script src="{{ asset('../assets/libs/flot/jquery.flot.stack.js') }}"></script>
-    <script src="{{ asset('../assets/libs/flot/jquery.flot.crosshair.js') }}"></script>
-    <script src="{{ asset('../assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js') }}"></script>
-    <script src="{{ asset('../dist/js/pages/chart/chart-page-init.js') }}"></script>
-    <script src="{{ asset('/assets/libs/moment/min/moment.min.js') }}"></script>
-    <script src="{{ asset('/assets/libs/fullcalendar/dist/fullcalendar.min.js') }}"></script>
-    <script src="{{ asset('/dist/js/pages/calendar/cal-init.js') }}"></script>
+    <script src="../dist/js/custom.min.js"></script>
+    <!-- this page js -->
+    <script src="../assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
+    <script src="../assets/extra-libs/multicheck/jquery.multicheck.js"></script>
+    <script src="../assets/extra-libs/DataTables/datatables.min.js"></script>
+    <script>
+      /****************************************
+       *       Basic Table                   *
+       ****************************************/
+      $("#zero_config").DataTable();
+    </script>
   </body>
+
 </html>
 

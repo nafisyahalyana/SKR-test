@@ -1,4 +1,4 @@
-<head>
+  <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -10,11 +10,11 @@
   </head>
   <!-- Favicon icon -->
   <link
-  rel="icon"
-  type="image/png"
-  sizes="16x16"
-  href="{{ asset('../assets/images/logo.png') }}"
-/>
+    rel="icon"
+    type="image/png"
+    sizes="16x16"
+    href="{{ asset('../assets/images/logo.png') }}"
+  />
   <body class="container bg-light">
     <!-- Start Header form -->
     <div class="text-center pt-5">
@@ -22,35 +22,32 @@
       <h2>Booking Ruangan</h2>
     </div>
     <!-- End Header form -->
-  
     <!-- Start Card -->
     <div class="card">
       <!-- Start Card Body -->
       <div class="card-body">
         <!-- Start Form -->
-        <form id="bookingForm" action="/booking" method="post" class="needs-validation" novalidate autocomplete="off">
+        <form id="bookingForm" action="{{ route('booking') }}" method="POST" class="needs-validation" novalidate autocomplete="off">
          @csrf
             <!-- Start Input Name -->
           <div class="form-group">
             <label for="inputName">Nama</label>
-            <input type="text" class="form-control" id="inputName" name="name" value="{{ auth()->user()->name }}" readonly />
+            <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" value="{{ auth()->user()->name }}" readonly/>
             {{-- <small class="form-text text-muted">Silahkan isi nama anda</small> --}}
             {{-- <input type="text" id="nama" name="nama" value="{{ auth()->user()->name }}" readonly> --}}
           </div>
 
           <div class="form-group">
             <label for="inputName">Bidang</label>
-            <input type="text" class="form-control" id="inputBidang" name="bidang" placeholder="Nama Bidang" required />
+            <input type="text" class="form-control" id="bidang" name="bidang" placeholder="Nama Bidang" required />
             <small class="form-text text-muted">Silahkan bidang anda</small>
           </div>
-          <!-- End Input Name -->
-  
-          
-  
+          <!-- End Input -->
+
           <!-- Start Input Telephone -->
           <div class="form-group">
             <label for="inputPhone">Nomor Handphone</label>
-            <input type="tel" class="form-control" id="inputPhone" name="phone" placeholder="08xxxxxxx" pattern="\d{3}\d{3}\d{4}" required />
+            <input type="tel" class="form-control" id="no_hp" name="no_hp" placeholder="08xxxxxxx" pattern="\d{4}\d{4}\d{4}" required />
             <small class="form-text text-muted"></small>
           </div>
           <!-- End Input Telephone -->
@@ -60,24 +57,24 @@
             <!-- Start Input Date -->
             <div class="form-group col-md-4">
               <label for="inputDate">Tanggal</label>
-              <input type="date" class="form-control" id="inputDate" name="date" required />
+              <input type="date" class="form-control" id="tanggal" name="tanggal" required />
               <small class="form-text text-muted">Silahkan pilih waktu rapat</small>
             </div>
             <!-- End Input Date -->
 
-<!-- End Input End Time -->
+            <!-- End Input End Time -->
 
             <!-- Start Input Start Time -->
             <div class="form-group col-md-4">
               <label for="Mulai">Waktu mulai</label>
-              <input type="time" class=" form-control" id="Mulai" name="Mulai" required><br>
+              <input type="time" class=" form-control" id="waktu_mulai" name="waktu_mulai" required><br>
             </div>
             <!-- End Input Start Time -->
   
             <!-- Start Input End Time -->
             <div class="form-group col-md-4">
               <label for="Berakhir">Waktu berakhir</label>
-              <input type="time" class="form-control" id="Berakhir" name="Berakhir" required><br>
+              <input type="time" class="form-control" id="waktu_berakhir" name="waktu_berakhir" required><br>
             </div>
             <!-- End Input End Time -->
           </div>
@@ -87,23 +84,20 @@
           <div class="form-group pl-1 pr-2">
             <legend class="col-form-label pt-0">Pilih Ruangan</legend>
             <div class="d-flex flex-row justify-content-between align-items-center">
-              <select class="form-control mr-1" id="inputStartTimeHour" name="startHour" required>
+              <select class="form-control mr-1" id="ruangan" name="ruangan" required>
                 <option value="" disabled selected>Pilih Ruangan</option>
                 @foreach ($ruangan as $r)
                 <option value="{{ $r->id }}">{{ $r->ruangan }}</option>
-            @endforeach
+                @endforeach
               </select>
             </div>
           </div>
           <!-- End Check Room Type -->
-  
-          <hr />
-  
-   
+          
           <!-- Start Input Remark -->
           <div class="form-group">
             <label for="textAreaRemark">Keperluan</label>
-            <textarea class="form-control" name="remark" id="textAreaRemark" rows="2" placeholder="Silahkan tuliskan kegiatan"></textarea>
+            <textarea class="form-control" name="keperluan" id="keperluan" rows="2" placeholder="Silahkan tuliskan kegiatan"></textarea>
           </div>
           <!-- End Input Remark -->
   

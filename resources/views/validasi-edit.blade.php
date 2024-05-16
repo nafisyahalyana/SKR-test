@@ -1,3 +1,12 @@
+{{-- <div class="mt-5 col-8 m-auto">
+    <form action="">
+        <div class="mb-3">
+            <label for="ruangan">Ruangan</label>
+            <input type="text" class="form-control" id="ruangan" required>
+        </div>
+    </form>
+    <!-- Be present above all else. - Naval Ravikant -->
+</div> --}}
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
   <head>
@@ -14,7 +23,7 @@
       content="Matrix Admin Lite Free Version is powerful and clean admin dashboard template, inpired from Bootstrap Framework"
     />
     <meta name="robots" content="noindex,nofollow" />
-    <title>SIRUANG | Pengguna</title>
+    <title>SIRUANG | Ruangan</title>
     <!-- Favicon icon -->
     <link
       rel="icon"
@@ -190,18 +199,20 @@
                   class="dropdown-menu dropdown-menu-end user-dd animated"
                   aria-labelledby="navbarDropdown"
                 >
-                  <div class="dropdown-divider"></div>
-                  <span class="dropdown-item-text">Hallo, {{ Auth::user()->name }}! anda {{ Auth::user()->role->name }}</span>
-                  <a class="dropdown-item" href="javascript:void(0)" onclick="logout()">
-                    <i class="fa fa-power-off me-1 ms-1"></i> Logout
-                  </a>
+                <div class="dropdown-divider"></div>
+                <span class="dropdown-item-text">Hallo, {{ Auth::user()->name }}! anda {{ Auth::user()->role->name }}</span>
+                <a class="dropdown-item" href="javascript:void(0)" onclick="logout()">
+                  <i class="fa fa-power-off me-1 ms-1"></i> Logout
+                </a>
                 
-                  <script>
-                    function logout() {
-                    // Redirect ke halaman login
-                    window.location.href = "/";
-                    }
-                  </script>
+                <script>
+                function logout() {
+                  // Redirect ke halaman login
+                  window.location.href = "/";
+                }
+                </script>
+                
+                  
                 </ul>
               </li>
               <!-- ============================================================== -->
@@ -251,7 +262,7 @@
         <div class="page-breadcrumb">
           <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-              <h4 class="page-title">Pengguna</h4>
+              <h4 class="page-title">Edit Data</h4>
               <div class="ms-auto text-end">
                 <nav aria-label="breadcrumb">
                   <ol class="breadcrumb">
@@ -275,45 +286,93 @@
           <!-- ============================================================== -->
           <!-- Start Page Content -->
           <!-- ============================================================== -->
-          <div class="row">
-            <div class="col-12">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title mb-0">Tabel User</h5>
-                </div>
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">No</th>
-                      <th scope="col">Nama</th>
-                      <th scope="col">Email</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach( $data as $d)
-                    <tr>
-                        <th>{{ $loop->iteration }}</th>
-                        <td>{{ $d->name }}</td>
-                        <td>{{ $d->email }}</td>
-                      </tr>
-                    @endforeach
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-          <!-- ============================================================== -->
-          <!-- End PAge Content -->
+          <div class="mt-5 col-5 m-auto">
+            <form id="bookingForm" action="/validasi/{{ $booking->id }}" method="POST" class="needs-validation" novalidate autocomplete="off">
+                @csrf
+                   <!-- Start Input Name -->
+                 <div class="form-group">
+                   <label for="inputName">Nama</label>
+                   <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" value="{{ $booking->nama }}" required/>
+                   {{-- <small class="form-text text-muted">Silahkan isi nama anda</small> --}}
+                   {{-- <input type="text" id="nama" name="nama" value="{{ auth()->user()->name }}" readonly> --}}
+                 </div>
+       
+                 <div class="form-group">
+                   <label for="inputName">Bidang</label>
+                   <input type="text" class="form-control" id="bidang" name="bidang" placeholder="Nama Bidang" value="{{ $booking->bidang }}" required />
+                   <small class="form-text text-muted">Silahkan bidang anda</small>
+                 </div>
+                 <!-- End Input -->
+       
+                 <!-- Start Input Telephone -->
+                 <div class="form-group">
+                   <label for="inputPhone">Nomor Handphone</label>
+                   <input type="tel" class="form-control" id="no_hp" name="no_hp" placeholder="08xxxxxxx" pattern="\d{4}\d{4}\d{4}" value="{{ $booking->no_hp }}" required />
+                   <small class="form-text text-muted"></small>
+                 </div>
+                 <!-- End Input Telephone -->
+         
+                 <!-- Start Input Date , Start Time and End Time -->
+                 <div class="form-row">
+                   <!-- Start Input Date -->
+                   <div class="form-group col-md-4">
+                     <label for="inputDate">Tanggal</label>
+                     <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{ $booking->tanggal }}" required />
+                     <small class="form-text text-muted">Silahkan pilih waktu rapat</small>
+                   </div>
+                   <!-- End Input Date -->
+       
+                   <!-- End Input End Time -->
+       
+                   <!-- Start Input Start Time -->
+                   <div class="form-group col-md-4">
+                     <label for="Mulai">Waktu mulai</label>
+                     <input type="time" class=" form-control" id="waktu_mulai" name="waktu_mulai" value="{{ $booking->waktu_mulai }}" required><br>
+                   </div>
+                   <!-- End Input Start Time -->
+         
+                   <!-- Start Input End Time -->
+                   <div class="form-group col-md-4">
+                     <label for="Berakhir">Waktu berakhir</label>
+                     <input type="time" class="form-control" id="waktu_berakhir" name="waktu_berakhir" value="{{ $booking->waktu_berakhir }}" required><br>
+                   </div>
+                   <!-- End Input End Time -->
+                 </div>
+                 <!-- End Input Date , Start Time and End Time -->
+         
+                 <!-- Start Check Room Type -->
+                 <div class="form-group pl-1 pr-2">
+                   <legend class="col-form-label pt-0">Pilih Ruangan</legend>
+                   <div class="d-flex flex-row justify-content-between align-items-center">
+                     <select class="form-control mr-1" id="ruangan" name="ruangan" value="{{ $booking->ruangan }}"required>
+                       <option value="" disabled selected>Pilih Ruangan</option>
+                       {{-- <option value="{{ $booking->ruangan->id }}">{{ $booking->ruangan->ruangan }}</option> --}}
+                       @foreach ($ruangan as $r)
+                <option value="{{ $r->id }}">{{ $r->ruangan }}</option>
+                @endforeach
+                     </select>
+                   </div>
+                 </div>
+                 <!-- End Check Room Type -->
+                 
+                 <!-- Start Input Remark -->
+                 <div class="form-group">
+                   <label for="textAreaRemark">Keperluan</label>
+                   <input class="form-control" name="keperluan" id="keperluan" rows="2" placeholder="Silahkan tuliskan kegiatan" value="{{ $booking->keperluan }}" required></input>
+                   
+                   
+                 </div>
+                 <!-- End Input Remark -->
+         
+                 <!-- Start Submit Button -->
+                 <button class="btn btn-primary btn-block col-lg-2" type="submit"><a href="jadwal"></a>Submit</button>
+                 <!-- End Submit Button -->
+               </form>
+    <!-- Be present above all else. - Naval Ravikant -->
+</div>
         </div>
       </div>
-      <!-- ============================================================== -->
-      <!-- End Page wrapper  -->
-      <!-- ============================================================== -->
     </div>
-    <!-- ============================================================== -->
-    <!-- End Wrapper -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
     <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
@@ -328,16 +387,7 @@
     <script src="../dist/js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
     <script src="../dist/js/custom.min.js"></script>
-    <!-- this page js -->
-    <script src="../assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
-    <script src="../assets/extra-libs/multicheck/jquery.multicheck.js"></script>
-    <script src="../assets/extra-libs/DataTables/datatables.min.js"></script>
-    <script>
-      /****************************************
-       *       Basic Table                   *
-       ****************************************/
-      $("#zero_config").DataTable();
-    </script>
+    
   </body>
 
 </html>

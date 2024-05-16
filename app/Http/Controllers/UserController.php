@@ -12,9 +12,10 @@ class UserController extends Controller
         return view('pengguna', compact('data'));
         
     }
-    // public function index()
-    // {
-    //     $data = User::get();
-    //     return view('index', compact('data'));
-    // }
+    public function index()
+    {
+        $data = User::count();
+    return view('dashboard', ['data' => $data]);
+    }
+    
 }

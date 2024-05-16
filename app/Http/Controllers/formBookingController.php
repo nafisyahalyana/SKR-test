@@ -13,8 +13,9 @@ class formBookingController extends Controller
         return view('booking', compact('ruangan'));
     }
 
-    public function simpanData(Request $request)
+    public function booking(Request $request)
     {
+        // dd($request->all());
         $booking = new Booking;
         $booking->nama = $request->input('nama');
         $booking->bidang = $request->input('bidang');
@@ -22,11 +23,14 @@ class formBookingController extends Controller
         $booking->tanggal = $request->input('tanggal');
         $booking->waktu_mulai = $request->input('waktu_mulai');
         $booking->waktu_berakhir = $request->input('waktu_berakhir');
+        $booking->ruangan = $request->input('ruangan');
         $booking->keperluan = $request->input('keperluan');
-        // $booking->save();
+        $booking->save();
 
-        return "Data berhasil disimpan";
+        return view('dashboard');
     }
+
+    
 //     public function store(Request $request)
 // {
 //     $booking = new Booking();
@@ -36,3 +40,4 @@ class formBookingController extends Controller
 //     return redirect()->route('booking');
 // }
 }
+

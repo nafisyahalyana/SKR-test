@@ -12,11 +12,15 @@ class Ruangan extends Model
 /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var string
      */
     protected $table = 'ruangan';
     // protected $table = [
     //     // 'id',
     //     'ruangan',
     // ];
+    // public function jadwals()
+    // {
+    //     return $this->hasMany(Jadwal::class);
+    // }
 }

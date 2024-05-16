@@ -11,20 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('booking', function (Blueprint $table) {
+        Schema::create('booking', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
             $table->string('bidang');
             $table->string('no_hp');
             $table->date('tanggal');
             $table->string('ruangan');
-            $table->time('waktu_mulai')->nullable();
-            $table->time('waktu_berakhir')->nullable();
+            $table->time('waktu_mulai');
+            $table->time('waktu_berakhir');
             $table->string('keperluan');
             $table->timestamps();
+
             
         });
-
     }
 
     /**

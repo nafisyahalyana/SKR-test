@@ -95,14 +95,6 @@
                   width="115"
                 />
               </span>
-              <!-- Logo icon -->
-              <!-- <b class="logo-icon"> -->
-              <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-              <!-- Dark Logo icon -->
-              <!-- <img src="../assets/images/logo-text.png" alt="homepage" class="light-logo" /> -->
-
-              <!-- </b> -->
-              <!--End Logo icon -->
             </a>
             <!-- ============================================================== -->
             <!-- End Logo -->
@@ -174,10 +166,7 @@
                 >
                   <i class="mdi mdi-bell font-24"></i>
                 </a>
-               
               </li>
-              
-
               <!-- ============================================================== -->
               <!-- User profile and search -->
               <!-- ============================================================== -->
@@ -208,6 +197,7 @@
                   aria-labelledby="navbarDropdown"
                 >
                 <div class="dropdown-divider"></div>
+                <span class="dropdown-item-text">Hallo, {{ Auth::user()->name }}! anda {{ Auth::user()->role->name }}</span>
                 <a class="dropdown-item" href="javascript:void(0)" onclick="logout()">
                   <i class="fa fa-power-off me-1 ms-1"></i> Logout
                 </a>
@@ -296,72 +286,22 @@
           <!-- ============================================================== -->
           <div class="row">
             <!-- Column -->
-            {{-- <div class="col-md-6 col-lg-2 col-xlg-3">
-              <div class="card card-hover">
-                <div class="box bg-cyan text-center">
-                  <h1 class="font-light text-white">
-                    <i class="mdi mdi-view-dashboard"></i>
-                  </h1>
-                  <h6 class="text-white">Dashboard</h6>
-                </div>
-              </div>
-            </div> --}}
-            <!-- Column -->
-            {{-- <div class="col-md-6 col-lg-3 col-xlg-3">
-              <div class="card card-hover">
-                <div class="box bg-success text-center">
-                  <h1 class="font-light text-white">
-                    <i class="mdi mdi-chart-areaspline"></i>
-                  </h1>
-                  <h6 class="text-white text-decoration: none"><a href="pengguna" style="color:white">Pengguna</a></h6>
-                </div>
-              </div>
-            </div> --}}
-            <!-- Column -->
-            {{-- <div class="col-md-6 col-lg-3 col-xlg-3">
-              <div class="card card-hover">
-                <div class="box bg-warning text-center">
-                  <h1 class="font-light text-white">
-                    <i class="mdi mdi-collage"></i>
-                  </h1>
-                  <h6 class="text-white"><a href="#" style="color:white">Ruangan</a></h6>
-                </div>
-              </div>
-            </div> --}}
-            <!-- Column -->
-            {{-- <div class="col-md-6 col-lg-3 col-xlg-3">
-              <div class="card card-hover">
-                <div class="box bg-danger text-center">
-                  <h1 class="font-light text-white">
-                    <i class="mdi mdi-border-outside"></i>
-                  </h1>
-                  <h6 class="text-white text-decoration: none"><a href="peminjaman" style="color:white">Peminjaman</a></h6>
-                </div>
-              </div>
-            </div> --}}
-            <!-- Column -->
-            {{-- <div class="col-md-6 col-lg-3 col-xlg-3">
-              <div class="card card-hover">
-                <div class="box bg-info text-center">
-                  <h1 class="font-light text-white">
-                    <i class="mdi mdi-arrow-all"></i>
-                  </h1>
-                  <h6 class="text-white"><a href="jadwal" style="color:white">Jadwal</a></h6>
-                </div>
-              </div>
-            </div> --}}
-            <!-- Column -->
-            <!-- Column -->
+            @if (Auth::user()->role_id !=1)
+            <div>
+              <a href="booking"></a>
+            </div>
+            @else
             <div class="col-md-6 col-lg-6 col-xlg-3">
               <div class="card card-hover">
                 <div class="box bg-danger text-center">
                   <h1 class="font-light text-white">
                     <i class="mdi mdi-receipt"></i>
                   </h1>
-                  <h6 class="text-white">Validasi</h6>
+                  <h6 class="text-white"><a href="validasi" style="color:white">Validasi</a></h6>
                 </div>
               </div>
             </div>
+            @endif
             <!-- Column -->
             <div class="col-md-6 col-lg-6 col-xlg-3">
               <div class="card card-hover">
@@ -373,35 +313,7 @@
                 </div>
               </div>
             </div>
-        
-          <!-- ============================================================== -->
-          <!-- Sales chart -->
-          <!-- ============================================================== -->
-          
-          <!-- ============================================================== -->
-          <!-- Sales chart -->
-          <!-- ============================================================== -->
-          <!-- ============================================================== -->
-          <!-- Recent comment and chats -->
-          <!-- ============================================================== -->
-          
-          <!-- ============================================================== -->
-          <!-- Recent comment and chats -->
-          <!-- ============================================================== -->
         </div>
-        <!-- ============================================================== -->
-        <!-- End Container fluid  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- footer -->
-        <!-- ============================================================== -->
-        <footer class="footer text-center">
-          All Rights Reserved by Matrix-admin. Designed and Developed by
-          <a href="https://www.wrappixel.com">WrapPixel</a>.
-        </footer>
-        <!-- ============================================================== -->
-        <!-- End footer -->
-        <!-- ============================================================== -->
       </div>
       <!-- ============================================================== -->
       <!-- End Page wrapper  -->
@@ -440,7 +352,6 @@
     <script src="{{ asset('/assets/libs/moment/min/moment.min.js') }}"></script>
     <script src="{{ asset('/assets/libs/fullcalendar/dist/fullcalendar.min.js') }}"></script>
     <script src="{{ asset('/dist/js/pages/calendar/cal-init.js') }}"></script>
-    
   </body>
 </html>
 
