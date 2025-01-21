@@ -15,12 +15,14 @@ class Ruangan extends Model
      * @var string
      */
     protected $table = 'ruangan';
-    // protected $table = [
-    //     // 'id',
-    //     'ruangan',
-    // ];
-    // public function jadwals()
-    // {
-    //     return $this->hasMany(Jadwal::class);
-    // }
+    protected $fillable = [
+        'id',
+        'ruangan',
+        'status' => 0, // Set role_id to 2 for new users
+    ];
+    public function booking()
+    {
+        return $this->belongsTo(Booking::class, 'id');
+    }
+   
 }

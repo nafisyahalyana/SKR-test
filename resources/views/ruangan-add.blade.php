@@ -130,25 +130,7 @@
                   ><i class="mdi mdi-menu font-24"></i
                 ></a>
               </li>
-              
-              <!-- ============================================================== -->
-              <!-- Search -->
-              <!-- ============================================================== -->
-              <li class="nav-item search-box">
-                <a
-                  class="nav-link waves-effect waves-dark"
-                  href="javascript:void(0)"
-                  ><i class="mdi mdi-magnify fs-4"></i
-                ></a>
-                <form class="app-search position-absolute">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Search &amp; enter"
-                  />
-                  <a class="srh-btn"><i class="mdi mdi-window-close"></i></a>
-                </form>
-              </li>
+             
             </ul>
             <!-- ============================================================== -->
             <!-- Right side toggle and nav items -->
@@ -157,19 +139,7 @@
               <!-- ============================================================== -->
               <!-- Comment -->
               <!-- ============================================================== -->
-              <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="navbarDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <i class="mdi mdi-bell font-24"></i>
-                </a>
-               
-              </li>
+              
               <!-- ============================================================== -->
               <!-- User profile and search -->
               <!-- ============================================================== -->
@@ -201,18 +171,9 @@
                 >
                 <div class="dropdown-divider"></div>
                 <span class="dropdown-item-text">Hallo, {{ Auth::user()->name }}! anda {{ Auth::user()->role->name }}</span>
-                <a class="dropdown-item" href="javascript:void(0)" onclick="logout()">
+                <a class="dropdown-item" href="logout" onclick="logout()">
                   <i class="fa fa-power-off me-1 ms-1"></i> Logout
                 </a>
-                
-                <script>
-                function logout() {
-                  // Redirect ke halaman login
-                  window.location.href = "/";
-                }
-                </script>
-                
-                  
                 </ul>
               </li>
               <!-- ============================================================== -->

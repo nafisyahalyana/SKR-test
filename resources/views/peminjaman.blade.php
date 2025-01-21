@@ -129,24 +129,7 @@
                 ></a>
               </li>
               
-              <!-- ============================================================== -->
-              <!-- Search -->
-              <!-- ============================================================== -->
-              <li class="nav-item search-box">
-                <a
-                  class="nav-link waves-effect waves-dark"
-                  href="javascript:void(0)"
-                  ><i class="mdi mdi-magnify fs-4"></i
-                ></a>
-                <form class="app-search position-absolute">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Search &amp; enter"
-                  />
-                  <a class="srh-btn"><i class="mdi mdi-window-close"></i></a>
-                </form>
-              </li>
+           
             </ul>
             <!-- ============================================================== -->
             <!-- Right side toggle and nav items -->
@@ -155,18 +138,7 @@
               <!-- ============================================================== -->
               <!-- Comment -->
               <!-- ============================================================== -->
-              <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="navbarDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <i class="mdi mdi-bell font-24"></i>
-                </a>
-              </li>
+              
               <!-- ============================================================== -->
               <!-- User profile and search -->
               <!-- ============================================================== -->
@@ -198,18 +170,9 @@
                 >
                 <div class="dropdown-divider"></div>
                 <span class="dropdown-item-text">Hallo, {{ Auth::user()->name }}! anda {{ Auth::user()->role->name }}</span>
-                <a class="dropdown-item" href="javascript:void(0)" onclick="logout()">
+                <a class="dropdown-item" href="logout" onclick="logout()">
                   <i class="fa fa-power-off me-1 ms-1"></i> Logout
                 </a>
-                
-                <script>
-                function logout() {
-                  // Redirect ke halaman login
-                  window.location.href = "/";
-                }
-                </script>
-                
-                  
                 </ul>
               </li>
               <!-- ============================================================== -->
@@ -240,6 +203,61 @@
                   ><span class="hide-menu">Dashboard</span></a
                 >
               </li>
+              @if(Auth::user()->role_id != 1)
+                      @else
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link waves-effect waves-dark sidebar-link"
+                  href="pengguna"
+                  aria-expanded="false"
+                  ><i class="mdi mdi-account-plus"></i
+                  ><span class="hide-menu">Pengguna</span></a
+                >
+              </li>
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link waves-effect waves-dark sidebar-link"
+                  href="ruangan"
+                  aria-expanded="false"
+                  ><i class="mdi mdi-collage"></i
+                  ><span class="hide-menu">Ruangan</span></a
+                >
+                @endif
+              </li>
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link has-arrow waves-effect waves-dark"
+                  href="javascript:void(0)"
+                  aria-expanded="false"
+                  ><i class="mdi mdi-receipt"></i
+                  ><span class="hide-menu">Peminjaman </span></a
+                >
+                <ul aria-expanded="false" class="collapse first-level">
+                  <li class="sidebar-item">
+                    @if(Auth::user()->role_id != 1)
+                      @else
+                    <a href="validasi" class="sidebar-link"
+                      ><i class="mdi mdi-note-outline"></i
+                      ><span class="hide-menu"> Validasi </span></a
+                    >
+                    @endif
+                  </li>
+                  <li class="sidebar-item">
+                    <a href="booking" class="sidebar-link"
+                      ><i class="mdi mdi-note-plus"></i
+                      ><span class="hide-menu"> Booking </span></a
+                    >
+                  </li>
+                </ul>
+              </li>
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link waves-effect waves-dark sidebar-link"
+                  href="jadwal"
+                  aria-expanded="false"
+                  ><i class="mdi mdi-arrow-all"></i
+                  ><span class="hide-menu">Jadwal</span></a
+                >
               </li>
             </ul>
           </nav>
@@ -309,10 +327,69 @@
                   <h1 class="font-light text-white">
                     <i class="mdi mdi-relative-scale"></i>
                   </h1>
-                  <h6 class="text-white"><a href="booking" style="color:white">Booking</h6>
+                  <h6 class="text-white"><a href="booking" style="color:white">Pesan Ruangan</h6>
                 </div>
               </div>
             </div>
+            @if (Auth::check())
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title mb-0">Tabel Booking</h5>
+                </div>
+                <table class="table" >
+                  <thead>
+                    <tr>
+                      <th scope="col">No</th>
+                      <th scope="col">Nama</th>
+                      <th scope="col">Bidang</th>
+                      @if(Auth::user()->role_id != 1)
+                      @else
+                      <th scope="col">No HP</th>
+                      @endif
+                      <th scope="col">Tanggal</th>
+                      <th scope="col">Waktu Mulai</th>
+                      <th scope="col">Waktu Berakhir</th>
+                      <th scope="col">Ruangan</th>
+                      <th scope="col">Keperluan</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach( $data as $d)
+                    @if ($d->nama == auth()->user()->name)
+                    <tr>
+                        <th>{{ $loop->iteration }}</th>
+                        <td>{{ $d->nama }}</td>
+                        <td>{{ $d->bidang }}</td>
+                        @if(Auth::user()->role_id != 1)
+                        @else
+                        <td>{{ $d->no_hp }}</td>
+                        @endif
+                        <td>{{ $d->tanggal }}</td>
+                        <td>{{ $d->waktu_mulai }}</td>
+                        <td>{{ $d->waktu_berakhir }}</td>
+                        <td>{{ $d->ruangan_id }}</td>
+                        <td>{{ $d->keperluan }}</td>
+                        <td>
+                            <a href="peminjaman-edit/{{ $d->id }}" class="btn btn-primary"><i class="far fa-edit"></i></a>
+                           
+                        </td>
+                        <td>
+                      
+                      </tr>
+                      
+                    @endif
+                    @endforeach
+                    
+                    
+                    
+                  </tbody>
+                </table>
+              </div>
+              
+            </div>
+            @endif
         </div>
       </div>
       <!-- ============================================================== -->

@@ -5,6 +5,7 @@
   
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
   
     <title>SIRUANG | Booking</title>
   </head>
@@ -19,7 +20,7 @@
     <!-- Start Header form -->
     <div class="text-center pt-5">
       <img src="logo.png" alt="network-logo" width="72" height="72" />
-      <h2>Booking Ruangan</h2>
+      <h2>Pesan Ruangan</h2>
     </div>
     <!-- End Header form -->
     <!-- Start Card -->
@@ -27,6 +28,17 @@
       <!-- Start Card Body -->
       <div class="card-body">
         <!-- Start Form -->
+        @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
         <form id="bookingForm" action="{{ route('booking') }}" method="POST" class="needs-validation" novalidate autocomplete="off">
          @csrf
             <!-- Start Input Name -->
@@ -39,15 +51,15 @@
 
           <div class="form-group">
             <label for="inputName">Bidang</label>
-            <input type="text" class="form-control" id="bidang" name="bidang" placeholder="Nama Bidang" required />
-            <small class="form-text text-muted">Silahkan bidang anda</small>
+            <input type="text" class="form-control" id="bidang" name="bidang" placeholder="Nama Bidang" value="{{ auth()->user()->divisi }}" readonly />
+            {{-- <small class="form-text text-muted">Silahkan bidang anda</small> --}}
           </div>
           <!-- End Input -->
 
           <!-- Start Input Telephone -->
           <div class="form-group">
             <label for="inputPhone">Nomor Handphone</label>
-            <input type="tel" class="form-control" id="no_hp" name="no_hp" placeholder="08xxxxxxx" pattern="\d{4}\d{4}\d{4}" required />
+            <input type="tel" class="form-control" id="no_hp" name="no_hp" placeholder="08xxxxxxx"  required /> {{--pattern="\d{4}\d{4}\d{4}"--}}
             <small class="form-text text-muted"></small>
           </div>
           <!-- End Input Telephone -->
@@ -84,7 +96,7 @@
           <div class="form-group pl-1 pr-2">
             <legend class="col-form-label pt-0">Pilih Ruangan</legend>
             <div class="d-flex flex-row justify-content-between align-items-center">
-              <select class="form-control mr-1" id="ruangan" name="ruangan" required>
+              <select class="form-control mr-1" id="ruangan_id" name="ruangan_id" required>
                 <option value="" disabled selected>Pilih Ruangan</option>
                 @foreach ($ruangan as $r)
                 <option value="{{ $r->id }}">{{ $r->ruangan }}</option>
@@ -99,12 +111,19 @@
             <label for="textAreaRemark">Keperluan</label>
             <textarea class="form-control" name="keperluan" id="keperluan" rows="2" placeholder="Silahkan tuliskan kegiatan"></textarea>
           </div>
+          <div class="form-group">
+            <label for="is_private">Privat</label>
+            <input type="checkbox" name="is_private" id="is_private" value="1">
+            <input type="hidden" name="is_private" value="0">
+    
+        </div>
           <!-- End Input Remark -->
-  
-          <!-- Start Submit Button -->
-          <button class="btn btn-primary btn-block col-lg-2" type="submit"><a href="jadwal"></a>Submit</button>
+          
+          <button class="btn btn-primary btn-block col-lg-2" type="submit">Submit</button>
+          
           <!-- End Submit Button -->
         </form>
+        
         <!-- End Form -->
       </div>
       <!-- End Card Body -->
@@ -121,28 +140,27 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  
-    <!-- Start Scritp for Form -->
-    <script>
-      // Example starter JavaScript for disabling form submissions if there are invalid fields
-      (function() {
-        'use strict';
-        window.addEventListener('load', function() {
-          // Fetch all the forms we want to apply custom Bootstrap validation styles to
-          var forms = document.getElementsByClassName('needs-validation');
-          // Loop over them and prevent submission
-          var validation = Array.prototype.filter.call(forms, function(form) {
-            form.addEventListener('submit', function(event) {
-              if (form.checkValidity() === false) {
-                event.preventDefault();
-                event.stopPropagation();
-              }
-              form.classList.add('was-validated');
-            }, false);
-          });
-        }, false);
-      })();
-    </script>
-    <!-- End Scritp for Form -->
-  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+      
+<script>(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
+
+
   </body>

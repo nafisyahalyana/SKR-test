@@ -1,3 +1,12 @@
+{{-- <div class="mt-5 col-8 m-auto">
+    <form action="">
+        <div class="mb-3">
+            <label for="ruangan">Ruangan</label>
+            <input type="text" class="form-control" id="ruangan" required>
+        </div>
+    </form>
+    <!-- Be present above all else. - Naval Ravikant -->
+</div> --}}
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
   <head>
@@ -14,7 +23,7 @@
       content="Matrix Admin Lite Free Version is powerful and clean admin dashboard template, inpired from Bootstrap Framework"
     />
     <meta name="robots" content="noindex,nofollow" />
-    <title>SIRUANG | Validasi</title>
+    <title>SIRUANG | Peminjaman</title>
     <!-- Favicon icon -->
     <link
       rel="icon"
@@ -121,8 +130,7 @@
                   ><i class="mdi mdi-menu font-24"></i
                 ></a>
               </li>
-              
-             
+         
             </ul>
             <!-- ============================================================== -->
             <!-- Right side toggle and nav items -->
@@ -132,7 +140,6 @@
               <!-- Comment -->
               <!-- ============================================================== -->
               
-
               <!-- ============================================================== -->
               <!-- User profile and search -->
               <!-- ============================================================== -->
@@ -163,9 +170,9 @@
                   aria-labelledby="navbarDropdown"
                 >
                 <div class="dropdown-divider"></div>
-                <span class="dropdown-item-text">Hallo, {{ Auth::user()->name }}! anda {{ Auth::user()->role ->name }}</span>
+                <span class="dropdown-item-text">Hallo, {{ Auth::user()->name }}! anda {{ Auth::user()->role->name }}</span>
                 <a class="dropdown-item" href="logout" onclick="logout()">
-                  <i class="fa fa-power-off me-1 ms-1"></i> Keluar
+                  <i class="fa fa-power-off me-1 ms-1"></i> Logout
                 </a>
                 </ul>
               </li>
@@ -191,10 +198,10 @@
               <li class="sidebar-item">
                 <a
                   class="sidebar-link waves-effect waves-dark sidebar-link"
-                  href="dashboard"
+                  href="../dashboard"
                   aria-expanded="false"
                   ><i class="mdi mdi-view-dashboard"></i
-                  ><span class="hide-menu">Beranda</span></a
+                  ><span class="hide-menu">Dashboard</span></a
                 >
               </li>
               @if(Auth::user()->role_id != 1)
@@ -202,7 +209,7 @@
               <li class="sidebar-item">
                 <a
                   class="sidebar-link waves-effect waves-dark sidebar-link"
-                  href="pengguna"
+                  href="../pengguna"
                   aria-expanded="false"
                   ><i class="mdi mdi-account-plus"></i
                   ><span class="hide-menu">Pengguna</span></a
@@ -211,7 +218,7 @@
               <li class="sidebar-item">
                 <a
                   class="sidebar-link waves-effect waves-dark sidebar-link"
-                  href="ruangan"
+                  href="../ruangan"
                   aria-expanded="false"
                   ><i class="mdi mdi-collage"></i
                   ><span class="hide-menu">Ruangan</span></a
@@ -230,16 +237,16 @@
                   <li class="sidebar-item">
                     @if(Auth::user()->role_id != 1)
                       @else
-                    <a href="validasi" class="sidebar-link"
+                    <a href="javascript:void(0)" class="sidebar-link"
                       ><i class="mdi mdi-note-outline"></i
                       ><span class="hide-menu"> Validasi </span></a
                     >
                     @endif
                   </li>
                   <li class="sidebar-item">
-                    <a href="booking" class="sidebar-link"
+                    <a href="../booking" class="sidebar-link"
                       ><i class="mdi mdi-note-plus"></i
-                      ><span class="hide-menu"> Pesan Ruangan </span></a
+                      ><span class="hide-menu"> Booking </span></a
                     >
                   </li>
                 </ul>
@@ -247,7 +254,7 @@
               <li class="sidebar-item">
                 <a
                   class="sidebar-link waves-effect waves-dark sidebar-link"
-                  href="jadwal"
+                  href="../jadwal"
                   aria-expanded="false"
                   ><i class="mdi mdi-arrow-all"></i
                   ><span class="hide-menu">Jadwal</span></a
@@ -272,15 +279,15 @@
         <div class="page-breadcrumb">
           <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-              <h4 class="page-title">Validasi</h4>
+              <h4 class="page-title">Edit Data Peminjaman </h4>
               <div class="ms-auto text-end">
                 <nav aria-label="breadcrumb">
-                  {{-- <ol class="breadcrumb">
+                  <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">
                       Library
                     </li>
-                  </ol> --}}
+                  </ol>
                 </nav>
               </div>
             </div>
@@ -296,77 +303,99 @@
           <!-- ============================================================== -->
           <!-- Start Page Content -->
           <!-- ============================================================== -->
-          <div class="row">
-            <div class="col-12">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title mb-0">Tabel Pesan Ruangan</h5>
-                </div>
-                <table class="table" >
-                  <thead>
-                    <tr>
-                      <th scope="col">No</th>
-                      <th scope="col">Nama</th>
-                      <th scope="col">Bidang</th>
-                      <th scope="col">No HP</th>
-                      <th scope="col">Tanggal</th>
-                      <th scope="col">Waktu Mulai</th>
-                      <th scope="col">Waktu Berakhir</th>
-                      <th scope="col">Ruangan</th>
-                      <th scope="col">Keperluan</th>
-                      <th scope="col">Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach( $data as $d)
-                    <tr>
-                        <th>{{ $loop->iteration }}</th>
-                        <td>{{ $d->nama }}</td>
-                        <td>{{ $d->bidang }}</td>
-                        <td>{{ $d->no_hp }}</td>
-                        <td>{{ $d->tanggal }}</td>
-                        <td>{{ $d->waktu_mulai }}</td>
-                        <td>{{ $d->waktu_berakhir }}</td>
-                        <td>{{ $d->ruangan_id }}</td>
-                        <td>{{ $d->keperluan }}</td>
-                        <td>
-                            
-                            <a href="#" class="btn btn-success" onclick="event.preventDefault(); document.getElementById('approve-form-{{ $d->id }}').submit();">
-                              <i class="fas fa-check"></i>
-                            </a>
-                            <form id="approve-form-{{ $d->id }}" action="{{ route('approve', $d) }}" method="POST" style="display: none;">
-                              @csrf
-                            </form>
-                            <a href="#" class="btn btn-danger" onclick="event.preventDefault(); document.getElementById('reject-form-{{ $d->id }}').submit();">
-                            <i class="fas fa-times"></i>
-                            </a>
-                            <form id="reject-form-{{ $d->id }}" action="{{ route('reject', $d) }}" method="POST" style="display: none;">
-                             @csrf
-                            </form>
-                        </td>
-
-                      
-                      </tr>
-                    @endforeach
-                    
-                    
-                    
-                  </tbody>
-                </table>
+          <div class="mt-5 col-5 m-auto">
+            <form id="bookingForm" action="/peminjaman/{{ $booking->id }}" method="POST" class="needs-validation" novalidate autocomplete="off">
+                @csrf
+                   <!-- Start Input Name -->
+                 <div class="form-group">
+                   <label for="inputName">Nama</label>
+                   <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" value="{{ $booking->nama }}" required/>
+                   {{-- <small class="form-text text-muted">Silahkan isi nama anda</small> --}}
+                   {{-- <input type="text" id="nama" name="nama" value="{{ auth()->user()->name }}" readonly> --}}
+                 </div>
+       
+                 <div class="form-group">
+                   <label for="inputName">Bidang</label>
+                   <input type="text" class="form-control" id="bidang" name="bidang" placeholder="Nama Bidang" value="{{ $booking->bidang }}" required />
+                   <small class="form-text text-muted">Silahkan bidang anda</small>
+                 </div>
+                 <!-- End Input -->
+       
+                 <!-- Start Input Telephone -->
+                 <div class="form-group">
+                   <label for="inputPhone">Nomor Handphone</label>
+                   <input type="tel" class="form-control" id="no_hp" name="no_hp" placeholder="08xxxxxxx" pattern="\d{4}\d{4}\d{4}" value="{{ $booking->no_hp }}" required />
+                   <small class="form-text text-muted"></small>
+                 </div>
+                 <!-- End Input Telephone -->
+         
+                 <!-- Start Input Date , Start Time and End Time -->
+                 <div class="form-row">
+                   <!-- Start Input Date -->
+                   <div class="form-group col-md-4">
+                     <label for="inputDate">Tanggal</label>
+                     <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{ $booking->tanggal }}" required />
+                     <small class="form-text text-muted">Silahkan pilih waktu rapat</small>
+                   </div>
+                   <!-- End Input Date -->
+       
+                   <!-- End Input End Time -->
+       
+                   <!-- Start Input Start Time -->
+                   <div class="form-group col-md-4">
+                     <label for="Mulai">Waktu mulai</label>
+                     <input type="time" class=" form-control" id="waktu_mulai" name="waktu_mulai" value="{{ $booking->waktu_mulai }}" required><br>
+                   </div>
+                   <!-- End Input Start Time -->
+         
+                   <!-- Start Input End Time -->
+                   <div class="form-group col-md-4">
+                     <label for="Berakhir">Waktu berakhir</label>
+                     <input type="time" class="form-control" id="waktu_berakhir" name="waktu_berakhir" value="{{ $booking->waktu_berakhir }}" required><br>
+                   </div>
+                   <!-- End Input End Time -->
+                 </div>
+                 <!-- End Input Date , Start Time and End Time -->
+         
+                 <!-- Start Check Room Type -->
+                 <div class="form-group pl-1 pr-2">
+                   <legend class="col-form-label pt-0">Pilih Ruangan</legend>
+                   <div class="d-flex flex-row justify-content-between align-items-center">
+                     <select class="form-control mr-1" id="ruangan_id" name="ruangan_id" required>
+                       <option value="" disabled selected>Pilih Ruangan</option>
+                       
+                       @foreach ($ruangan as $r)
+                        <option value="{{ $r->id }}">{{ $r->ruangan }}</option>
+                @endforeach
+                     </select>
+                   </div>
+                 </div>
+                 <!-- End Check Room Type -->
+                 
+                 <!-- Start Input Remark -->
+                 <div class="form-group">
+                   <label for="textAreaRemark">Keperluan</label>
+                   <input class="form-control" name="keperluan" id="keperluan" rows="2" placeholder="Silahkan tuliskan kegiatan" value="{{ $booking->keperluan }}" required></input>
+                   
+                   
+                 </div>
+                 <div class="form-group">
+                  <label for="is_private">Privat</label>
+                  <input type="checkbox" name="is_private" id="is_private" value="1">
+                  <input type="hidden" name="is_private" value="0">
+          
               </div>
-              
-            </div>
-          </div>
+                 <!-- End Input Remark -->
+         
+                 <!-- Start Submit Button -->
+                 <button class="btn btn-primary btn-block col-lg-2" type="submit"><a href="jadwal"></a>Submit</button>
+                 <!-- End Submit Button -->
+               </form>
+    <!-- Be present above all else. - Naval Ravikant -->
+</div>
         </div>
       </div>
-      <!-- ============================================================== -->
-      <!-- End Page wrapper  -->
-      <!-- ============================================================== -->
     </div>
-    <!-- ============================================================== -->
-    <!-- End Wrapper -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
     <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
@@ -381,16 +410,7 @@
     <script src="../dist/js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
     <script src="../dist/js/custom.min.js"></script>
-    <!-- this page js -->
-    <script src="../assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
-    <script src="../assets/extra-libs/multicheck/jquery.multicheck.js"></script>
-    <script src="../assets/extra-libs/DataTables/datatables.min.js"></script>
-    <script>
-      /****************************************
-       *       Basic Table                   *
-       ****************************************/
-      $("#zero_config").DataTable();
-    </script>
+    
   </body>
 
 </html>

@@ -15,14 +15,29 @@ class Booking extends Model
      * 
      */
     protected $table = 'booking';
-    // protected $fillable = [
-    //     'id',
-    //     'ruangan'
-    // ];
+    protected $fillable = [
+        'id',
+        'nama',
+        'bidang',
+        'no_hp',
+        'tanggal',
+        'waktu_mulai',
+        'waktu_berakhir',
+        'ruangan_id',
+        'keperluan',
+        'is_privat',
+        'status',
+    ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function ruangan()
     {
         return $this->belongsTo(Ruangan::class);
     }
+    
     
 }
 

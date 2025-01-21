@@ -12,6 +12,7 @@ class UserController extends Controller
         return view('pengguna', compact('data'));
         
     }
+    
     public function index()
     {
         $data = User::count();

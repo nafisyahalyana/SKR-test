@@ -23,7 +23,7 @@
       content="Matrix Admin Lite Free Version is powerful and clean admin dashboard template, inpired from Bootstrap Framework"
     />
     <meta name="robots" content="noindex,nofollow" />
-    <title>SIRUANG | Ruangan</title>
+    <title>SIRUANG | Validasi</title>
     <!-- Favicon icon -->
     <link
       rel="icon"
@@ -131,24 +131,6 @@
                 ></a>
               </li>
               
-              <!-- ============================================================== -->
-              <!-- Search -->
-              <!-- ============================================================== -->
-              <li class="nav-item search-box">
-                <a
-                  class="nav-link waves-effect waves-dark"
-                  href="javascript:void(0)"
-                  ><i class="mdi mdi-magnify fs-4"></i
-                ></a>
-                <form class="app-search position-absolute">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Search &amp; enter"
-                  />
-                  <a class="srh-btn"><i class="mdi mdi-window-close"></i></a>
-                </form>
-              </li>
             </ul>
             <!-- ============================================================== -->
             <!-- Right side toggle and nav items -->
@@ -157,19 +139,7 @@
               <!-- ============================================================== -->
               <!-- Comment -->
               <!-- ============================================================== -->
-              <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="navbarDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <i class="mdi mdi-bell font-24"></i>
-                </a>
-               
-              </li>
+              
               <!-- ============================================================== -->
               <!-- User profile and search -->
               <!-- ============================================================== -->
@@ -201,18 +171,9 @@
                 >
                 <div class="dropdown-divider"></div>
                 <span class="dropdown-item-text">Hallo, {{ Auth::user()->name }}! anda {{ Auth::user()->role->name }}</span>
-                <a class="dropdown-item" href="javascript:void(0)" onclick="logout()">
+                <a class="dropdown-item" href="logout" onclick="logout()">
                   <i class="fa fa-power-off me-1 ms-1"></i> Logout
                 </a>
-                
-                <script>
-                function logout() {
-                  // Redirect ke halaman login
-                  window.location.href = "/";
-                }
-                </script>
-                
-                  
                 </ul>
               </li>
               <!-- ============================================================== -->
@@ -237,10 +198,66 @@
               <li class="sidebar-item">
                 <a
                   class="sidebar-link waves-effect waves-dark sidebar-link"
-                  href="dashboard"
+                  href="../dashboard"
                   aria-expanded="false"
                   ><i class="mdi mdi-view-dashboard"></i
                   ><span class="hide-menu">Dashboard</span></a
+                >
+              </li>
+              @if(Auth::user()->role_id != 1)
+                      @else
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link waves-effect waves-dark sidebar-link"
+                  href="../pengguna"
+                  aria-expanded="false"
+                  ><i class="mdi mdi-account-plus"></i
+                  ><span class="hide-menu">Pengguna</span></a
+                >
+              </li>
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link waves-effect waves-dark sidebar-link"
+                  href="../ruangan"
+                  aria-expanded="false"
+                  ><i class="mdi mdi-collage"></i
+                  ><span class="hide-menu">Ruangan</span></a
+                >
+              </li>
+              @endif
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link has-arrow waves-effect waves-dark"
+                  href="javascript:void(0)"
+                  aria-expanded="false"
+                  ><i class="mdi mdi-receipt"></i
+                  ><span class="hide-menu">Peminjaman </span></a
+                >
+                <ul aria-expanded="false" class="collapse first-level">
+                  <li class="sidebar-item">
+                    @if(Auth::user()->role_id != 1)
+                      @else
+                    <a href="javascript:void(0)" class="sidebar-link"
+                      ><i class="mdi mdi-note-outline"></i
+                      ><span class="hide-menu"> Validasi </span></a
+                    >
+                    @endif
+                  </li>
+                  <li class="sidebar-item">
+                    <a href="../booking" class="sidebar-link"
+                      ><i class="mdi mdi-note-plus"></i
+                      ><span class="hide-menu"> Booking </span></a
+                    >
+                  </li>
+                </ul>
+              </li>
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link waves-effect waves-dark sidebar-link"
+                  href="../jadwal"
+                  aria-expanded="false"
+                  ><i class="mdi mdi-arrow-all"></i
+                  ><span class="hide-menu">Jadwal</span></a
                 >
               </li>
             </ul>
@@ -344,11 +361,11 @@
                  <div class="form-group pl-1 pr-2">
                    <legend class="col-form-label pt-0">Pilih Ruangan</legend>
                    <div class="d-flex flex-row justify-content-between align-items-center">
-                     <select class="form-control mr-1" id="ruangan" name="ruangan" value="{{ $booking->ruangan }}"required>
+                     <select class="form-control mr-1" id="ruangan_id" name="ruangan_id" required>
                        <option value="" disabled selected>Pilih Ruangan</option>
-                       {{-- <option value="{{ $booking->ruangan->id }}">{{ $booking->ruangan->ruangan }}</option> --}}
+                       
                        @foreach ($ruangan as $r)
-                <option value="{{ $r->id }}">{{ $r->ruangan }}</option>
+                        <option value="{{ $r->id }}">{{ $r->ruangan }}</option>
                 @endforeach
                      </select>
                    </div>
@@ -362,6 +379,12 @@
                    
                    
                  </div>
+                 <div class="form-group">
+                  <label for="is_private">Privat</label>
+                  <input type="checkbox" name="is_private" id="is_private" value="1">
+                  <input type="hidden" name="is_private" value="0">
+          
+              </div>
                  <!-- End Input Remark -->
          
                  <!-- Start Submit Button -->

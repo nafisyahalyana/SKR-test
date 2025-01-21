@@ -17,10 +17,11 @@ return new class extends Migration
             $table->string('bidang');
             $table->string('no_hp');
             $table->date('tanggal');
-            $table->string('ruangan');
+            $table->string('ruangan_id');
             $table->time('waktu_mulai');
             $table->time('waktu_berakhir');
             $table->string('keperluan');
+            $table->boolean('is_privat');
             $table->timestamps();
 
             
