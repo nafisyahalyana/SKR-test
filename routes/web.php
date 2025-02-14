@@ -21,9 +21,9 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 |
 */
 
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
+Route::get('/', function () {
+    return view('dashboard');
+})->middleware('auth');
 
 Route::get('/register', function () {
     return view('register');
