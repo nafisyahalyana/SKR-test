@@ -22,7 +22,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 */
 
 Route::get('/', function () {
-    return view('dashboard');
+    return view('login');
 })->middleware('auth');
 
 Route::get('/register', function () {
