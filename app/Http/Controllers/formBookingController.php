@@ -73,9 +73,12 @@ class formBookingController extends Controller
              Log::info('Status ruangan berhasil diperbarui.', ['ruangan' => $ruangan]);
             //  $this->sendWhatsAppNotification();
         $client = new Client();
-        $phoneNumber = '6285764655971';
-        $apiUrl = 'https://rsml.app/bridging/wa_sendopen/' . $phoneNumber . '/Perhatian! Ada permintaan peminjaman ruangan terbaru yang memerlukan persetujuan Anda. Mohon segera lakukan validasi untuk permintaan tersebut.';
-
+        // $phoneNumber = '6281233313892';
+        // $apiUrl = 'https://rsml.app/bridging/wa_sendopen/' . $phoneNumber . '/Perhatian! Ada permintaan peminjaman ruangan terbaru yang memerlukan persetujuan Anda. Mohon segera lakukan validasi untuk permintaan tersebut.';
+        $phoneNumber = '6281233313892';
+        $message = urlencode('Perhatian! Ada permintaan peminjaman ruangan terbaru yang memerlukan persetujuan Anda. Mohon segera lakukan validasi untuk permintaan tersebut.');
+        $apiUrl = 'https://store.cakdev.com/api/whatsapp_send?number=' . $phoneNumber . '&message=' . $message;
+        
         try {
             $response = $client->request('GET', $apiUrl);
             if ($response->getStatusCode() == 200) {

@@ -28,8 +28,9 @@ class ValidasiController extends Controller
         // Send notification via API
         $client = new Client();
         $phoneNumber = $booking->no_hp;
-        $apiUrl = 'https://rsml.app/bridging/wa_sendopen/' . $phoneNumber . '/Selamat! Permintaan peminjaman ruangan Anda telah disetujui. Anda dapat menggunakan ruangan sesuai dengan jadwal yang telah ditentukan. Terima kasih!';
-
+        $message = urlencode('Mohon maaf, Permintaan peminjaman ruangan Anda ditolak. Anda dapat memilih peminjaman dengan waktu lain. Terima kasih');
+        $apiUrl = 'https://store.cakdev.com/api/whatsapp_send?number=' . $phoneNumber . '&message=' . $message;
+        
         try {
             $response = $client->request('GET', $apiUrl);
             if ($response->getStatusCode() == 200) {
@@ -54,8 +55,9 @@ class ValidasiController extends Controller
         // Send notification via API
         $client = new Client();
         $phoneNumber = $booking->no_hp;
-        $apiUrl = 'https://rsml.app/bridging/wa_sendopen/' . $phoneNumber . '/Mohon maaf, Permintaan peminjaman ruangan Anda ditolak. Anda dapat memilih peminjaman dengan waktu lain. Terima kasih!';
-
+        $message = urlencode('Mohon maaf, Permintaan peminjaman ruangan Anda ditolak. Anda dapat memilih peminjaman dengan waktu lain. Terima kasih');
+        $apiUrl = 'https://store.cakdev.com/api/whatsapp_send?number=' . $phoneNumber . '&message=' . $message;
+        
         try {
             $response = $client->request('GET', $apiUrl);
             if ($response->getStatusCode() == 200) {

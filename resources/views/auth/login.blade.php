@@ -34,22 +34,22 @@
             </label>
         </div>
 
+        <div class="flex items-center justify-end mt-4">
+            @if (Route::has('password.request'))
+                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
+                    {{-- {{ __('Lupa Kata Sandi?') }} --}}
+                </a>
+            @endif
+
+            <x-primary-button class="ms-3">
+                {{ __('Masuk') }}
+            </x-primary-button>
+            
+            
+        </div>
         
         
     </form>
-    <div class="flex items-center justify-end mt-4">
-        @if (Route::has('password.request'))
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                {{-- {{ __('Lupa Kata Sandi?') }} --}}
-            </a>
-        @endif
-
-        <x-primary-button class="ms-3">
-            {{ __('Masuk') }}
-        </x-primary-button>
-        
-    </div>
-    
     <div class="flex items-center justify-end mt-4 h-35" >
         <a href="{{ route('register') }}" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
         
@@ -58,5 +58,4 @@
         </x-primary-button>
         </a>
     </div>
-    
 </x-guest-layout>

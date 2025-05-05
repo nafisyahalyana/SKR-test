@@ -29,6 +29,9 @@ Route::get('/register', function () {
     return view('register');
 })->name('register');
 
+// Route::post('/login', function () {
+//     return view('login');
+// })->name('login');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
