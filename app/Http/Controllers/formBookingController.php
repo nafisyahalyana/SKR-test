@@ -22,11 +22,11 @@ class formBookingController extends Controller
     
     }
     
-    
-
     public function booking(Request $request)
     {
         Log::info('Memulai proses booking.');
+        Log::info('Data yang dikirim:', $request->all());
+
         $validatedData = $request->validate([
             'nama' => 'required|string',
             'bidang' => 'required|string',
@@ -42,17 +42,16 @@ class formBookingController extends Controller
         //
         $waktuMulai = Carbon::parse($validatedData['tanggal'] . ' ' . $validatedData['waktu_mulai']);
         $waktuBerakhir = Carbon::parse($validatedData['tanggal'] . ' ' . $validatedData['waktu_berakhir']);
-
         $conflictBooking = Booking::where('ruangan_id', $validatedData['ruangan_id'])
-    ->where('tanggal', $validatedData['tanggal']) // Tambahkan pemeriksaan tanggal
-    ->where(function ($query) use ($waktuMulai, $waktuBerakhir) {
-        $query->where(function ($query) use ($waktuMulai, $waktuBerakhir) {
-            $query->where('waktu_mulai', '<=', $waktuBerakhir)
-                ->where('waktu_berakhir', '>=', $waktuMulai);
-        });
-    })->exists();
+        ->where('tanggal', $validatedData['tanggal']) // Tambahkan pemeriksaan tanggal
+        ->where(function ($query) use ($waktuMulai, $waktuBerakhir) {
+            $query->where(function ($query) use ($waktuMulai, $waktuBerakhir) {
+                $query->where('waktu_mulai', '<=', $waktuBerakhir)
+                    ->where('waktu_berakhir', '>=', $waktuMulai);
+            });
+        })->exists();
 
-        
+
         if ($conflictBooking) {
             Log::info('Konflik booking ditemukan.');
             return back()->with('error', 'Maaf, Ruangan sudah dipinjam pada waktu tersebut.' );
@@ -61,7 +60,7 @@ class formBookingController extends Controller
         $validatedData['is_private'] = $request->has('is_private') ? 1 : 0;
         $validatedData['waktu_mulai'] = $waktuMulai;
         $validatedData['waktu_berakhir'] = $waktuBerakhir;
-
+        
         // Simpan booking menggunakan metode create
         $booking = Booking::create($validatedData);
         
@@ -72,25 +71,47 @@ class formBookingController extends Controller
         $ruangan->save();
              Log::info('Status ruangan berhasil diperbarui.', ['ruangan' => $ruangan]);
             //  $this->sendWhatsAppNotification();
-        $client = new Client();
-        // $phoneNumber = '6281233313892';
-        // $apiUrl = 'https://rsml.app/bridging/wa_sendopen/' . $phoneNumber . '/Perhatian! Ada permintaan peminjaman ruangan terbaru yang memerlukan persetujuan Anda. Mohon segera lakukan validasi untuk permintaan tersebut.';
-        $phoneNumber = '6281233313892';
-        $message = urlencode('Perhatian! Ada permintaan peminjaman ruangan terbaru yang memerlukan persetujuan Anda. Mohon segera lakukan validasi untuk permintaan tersebut.');
-        $apiUrl = 'https://store.cakdev.com/api/whatsapp_send?number=' . $phoneNumber . '&message=' . $message;
-        
+            
+        Log::info('Sebelum kirim WhatsApp');
+
         try {
-            $response = $client->request('GET', $apiUrl);
-            if ($response->getStatusCode() == 200) {
-                // Notification sent successfully
-            } else {
-                // Handle failed notification if necessary
-            }
-        } catch (\Exception $e) {
-            // Handle exception if necessary
+        $token = 'ivwJp5fJtCEQ4rTJ1QBH';
+        $target = '081233313892';
+            
+        // Ambil informasi dari data booking
+        $nama     = $booking->nama;
+        $ruangan  = $booking->ruangan->ruangan ?? 'Ruangan Tidak Diketahui'; // Pastikan relasi tersedia
+        $tanggal  = \Carbon\Carbon::parse($booking->tanggal)->format('d-m-Y');
+        $mulai    = \Carbon\Carbon::parse($booking->waktu_mulai)->format('H:i');
+        $berakhir = \Carbon\Carbon::parse($booking->waktu_berakhir)->format('H:i');
+
+        // Susun isi pesan
+        $pesan = "Perhatian! Ada permintaan peminjaman ruangan baru.\n\n";
+        $pesan .= "👤 Nama: *{$nama}*\n";
+        $pesan .= "🏢 Ruangan: *{$ruangan}*\n";
+        $pesan .= "📅 Tanggal: {$tanggal}\n";
+        $pesan .= "🕒 Waktu: {$mulai} - {$berakhir}\n\n";
+        $pesan .= "Mohon segera lakukan validasi permintaan tersebut.";
+
+        // Buat URL dengan pesan yang sudah di-urlencode
+        $message = urlencode($pesan);
+        $url = "https://api.fonnte.com/send?token={$token}&target={$target}&message={$message}";
+
+
+        $response = file_get_contents($url);
+
+        if ($response !== false) {
+            Log::info('WhatsApp berhasil dikirim.', ['response' => $response]);
+        } else {
+            Log::warning('Gagal kirim WA. Tidak ada respons.');
+        }
+    } catch (\Exception $e) {
+            Log::error('Gagal mengirim WA: ' . $e->getMessage());
         }
 
+        Log::info('Setelah proses kirim WhatsApp');
         return view('dashboard');
+        
     }
     
     public function validasi(){

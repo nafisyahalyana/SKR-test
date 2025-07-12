@@ -13,8 +13,7 @@ class ValidasiController extends Controller
         ->orderBy('tanggal', 'desc')
                     ->get();
         return view('validasi', compact('data'));
-        // $data = Booking::get();
-        // return view('validasi', compact('data'));
+        
     }
     public function approve(Request $request, Booking $booking)
     {
@@ -25,21 +24,37 @@ class ValidasiController extends Controller
         $ruangan = Ruangan::find($booking->ruangan_id);
         $ruangan->status = 0;
         $ruangan->save();
-        // Send notification via API
-        $client = new Client();
-        $phoneNumber = $booking->no_hp;
-        $message = urlencode('Mohon maaf, Permintaan peminjaman ruangan Anda ditolak. Anda dapat memilih peminjaman dengan waktu lain. Terima kasih');
-        $apiUrl = 'https://store.cakdev.com/api/whatsapp_send?number=' . $phoneNumber . '&message=' . $message;
         
         try {
-            $response = $client->request('GET', $apiUrl);
-            if ($response->getStatusCode() == 200) {
-                // Notification sent successfully
-            } else {
-                // Handle failed notification if necessary
-            }
+        $token = 'ivwJp5fJtCEQ4rTJ1QBH';
+        $target = $booking->no_hp;
+        
+        // Ambil info yang dibutuhkan
+        $nama     = $booking->nama;
+        $ruangan  = $booking->ruangan->ruangan; // pastikan relasi 'ruangan' tersedia
+        $mulai    = \Carbon\Carbon::parse($booking->waktu_mulai)->format('H:i');
+        $berakhir = \Carbon\Carbon::parse($booking->waktu_berakhir)->format('H:i');
+        $tanggal  = \Carbon\Carbon::parse($booking->tanggal)->format('m-d-Y');
+
+        // Buat isi pesan
+        $message = "Halo {$nama},\n\n";
+        $message .= "Permintaan peminjaman ruangan *{$ruangan}* telah *disetujui*.\n";
+        $message .= "Silakan gunakan ruangan pada:\n";
+        $message .= "📅 {$tanggal}\n🕒 {$mulai} - {$berakhir}\n\n";
+        $message .= "Terima kasih.";
+
+        // Kirim melalui API
+        $url = "https://api.fonnte.com/send?token={$token}&target={$target}&message=" . urlencode($message);
+
+        $response = file_get_contents($url);
+
+        if ($response !== false) {
+        // Log::info('WhatsApp berhasil dikirim.', ['response' => $response]);
+        } else {
+        // Log::warning('Gagal kirim WA. Tidak ada respons.');
+        }
         } catch (\Exception $e) {
-            // Handle exception if necessary
+        // Log::error('Gagal mengirim WA: ' . $e->getMessage());
         }
         return redirect()->back()->with('success', 'Booking disetujui.');
     }
@@ -52,21 +67,34 @@ class ValidasiController extends Controller
         $ruangan = Ruangan::find($booking->ruangan_id);
         $ruangan->status = 0;
         $ruangan->save();
-        // Send notification via API
-        $client = new Client();
-        $phoneNumber = $booking->no_hp;
-        $message = urlencode('Mohon maaf, Permintaan peminjaman ruangan Anda ditolak. Anda dapat memilih peminjaman dengan waktu lain. Terima kasih');
-        $apiUrl = 'https://store.cakdev.com/api/whatsapp_send?number=' . $phoneNumber . '&message=' . $message;
         
         try {
-            $response = $client->request('GET', $apiUrl);
-            if ($response->getStatusCode() == 200) {
-                // Notification sent successfully
-            } else {
-                // Handle failed notification if necessary
-            }
+        $token = 'ivwJp5fJtCEQ4rTJ1QBH';
+        $target = $booking->no_hp;
+        $nama     = $booking->nama;
+        $ruangan  = $booking->ruangan->ruangan ?? 'Nama Ruangan';
+        $tanggal  = \Carbon\Carbon::parse($booking->tanggal)->format('d-m-Y');
+        $mulai    = \Carbon\Carbon::parse($booking->waktu_mulai)->format('H:i');
+        $berakhir = \Carbon\Carbon::parse($booking->waktu_berakhir)->format('H:i');
+
+        // Susun pesan penolakan
+        $pesan = "Mohon maaf *{$nama}*,\n\n";
+        $pesan .= "Permintaan peminjaman ruangan *{$ruangan}* pada:\n";
+        $pesan .= "📅 {$tanggal}\n🕒 {$mulai} - {$berakhir}\n";
+        $pesan .= "telah *ditolak* oleh admin.\n\n";
+        $pesan .= "Silakan ajukan kembali di waktu yang lain.\nTerima kasih 🙏";
+        $message = urlencode($pesan);
+        $url = "https://api.fonnte.com/send?token={$token}&target={$target}&message={$message}";
+
+        $response = file_get_contents($url);
+
+        if ($response !== false) {
+        // Log::info('WhatsApp berhasil dikirim.', ['response' => $response]);
+        } else {
+        // Log::warning('Gagal kirim WA. Tidak ada respons.');
+        }
         } catch (\Exception $e) {
-            // Handle exception if necessary
+        // Log::error('Gagal mengirim WA: ' . $e->getMessage());
         }
         return redirect()->back()->with('success', 'Booking ditolak.');
     }

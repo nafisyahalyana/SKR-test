@@ -342,7 +342,7 @@
                         <td>{{ $d->tanggal }}</td>
                         <td>{{ $d->waktu_mulai }}</td>
                         <td>{{ $d->waktu_berakhir }}</td>
-                        <td>{{ $d->ruangan_id }}</td>
+                        <td>{{ $d->ruangan->ruangan }}</td>
                         {{-- <td>{{ $d->keperluan }}</td> --}}
                         <td>
                           @if($d->is_private && Auth::user()->role_id != 1)
@@ -400,13 +400,21 @@
     <script src="../assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
     <script src="../assets/extra-libs/multicheck/jquery.multicheck.js"></script>
     <script src="../assets/extra-libs/DataTables/datatables.min.js"></script>
-    <script>
+    {{-- <script>
         /****************************************
        *       Basic Table                   *
        ****************************************/
       $("#zero_config").DataTable();
-    </script>
-    
+    </script> --}}
+    <script>
+  $(document).ready(function() {
+    $('#zero_config').DataTable({
+      ordering: false // ❌ Nonaktifkan fitur sorting
+    });
+  });
+</script>
+
+
   </body>
 </html>
 

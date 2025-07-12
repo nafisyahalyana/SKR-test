@@ -22,7 +22,8 @@ class Ruangan extends Model
     ];
     public function booking()
     {
-        return $this->belongsTo(Booking::class, 'id');
+        // return $this->belongsTo(Booking::class, 'id');
+        return $this->hasMany(Booking::class);
     }
    
 }
