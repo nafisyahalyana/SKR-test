@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 27, 2025 at 03:29 PM
+-- Generation Time: Jul 17, 2025 at 04:00 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -48,14 +48,7 @@ CREATE TABLE `booking` (
 --
 
 INSERT INTO `booking` (`id`, `nama`, `bidang`, `no_hp`, `tanggal`, `ruangan_id`, `waktu_mulai`, `waktu_berakhir`, `keperluan`, `is_private`, `status`, `created_at`, `updated_at`) VALUES
-(259, 'rizka', 'Bakordik', '085764655971', '2025-01-21', 10, '16:00:00', '16:50:00', 'tes', 0, 'pending', '2025-01-21 08:50:59', '2025-01-21 08:50:59'),
-(260, 'rizka', 'Bakordik', '085764655971', '2025-01-21', 2, '16:03:00', '16:15:00', 'yes', 0, 'pending', '2025-01-21 09:00:32', '2025-01-21 09:00:32'),
-(261, 'rizka', 'Bakordik', '085764655971', '2025-01-21', 3, '16:05:00', '16:15:00', 'tes', 0, 'pending', '2025-01-21 09:02:52', '2025-01-21 09:02:52'),
-(262, 'rizka', 'Bakordik', '085764655971', '2025-01-21', 9, '16:05:00', '16:15:00', 'tes', 0, 'pending', '2025-01-21 09:04:58', '2025-01-21 09:04:58'),
-(263, 'rizka', 'Bakordik', '085764655971', '2025-01-21', 8, '16:06:00', '16:17:00', 'rapat', 0, 'pending', '2025-01-21 09:06:02', '2025-01-21 09:06:02'),
-(264, 'rizka', 'Bakordik', '085764655971', '2025-01-21', 1, '16:10:00', '16:20:00', 'tes', 0, 'pending', '2025-01-21 09:08:14', '2025-01-21 09:08:14'),
-(265, 'rizka', 'Bakordik', '085764655971', '2025-01-21', 6, '17:30:00', '17:35:00', 'yes', 0, 'pending', '2025-01-21 09:13:07', '2025-01-21 09:13:07'),
-(266, 'rizka', 'Bakordik', '085764655971', '2025-01-21', 3, '16:20:00', '17:00:00', 'yes', 0, 'pending', '2025-01-21 09:17:13', '2025-01-21 09:17:13');
+(279, 'rizka', 'Bakordik', '081233313892', '2025-07-17', 11, '22:10:00', '22:30:00', 'yhaa', 0, 'disetujui', '2025-07-17 15:05:26', '2025-07-17 15:05:56');
 
 -- --------------------------------------------------------
 
@@ -123,7 +116,7 @@ CREATE TABLE `password_reset_tokens` (
 --
 
 INSERT INTO `password_reset_tokens` (`email`, `token`, `created_at`) VALUES
-('nafisyahalyana42@gmail.com', '$2y$12$FZe5kvjyH002Z525jsbBUOr3n0V9eohPZAGb6Kcr.L4pSZArTjSt6', '2025-01-06 10:05:12');
+('nafisyahalyana42@gmail.com', '$2y$12$.26hbvrtpZvx1mkI6wwxiukFiPPAI02hN7mhgz6onPTqcgnoUzUOW', '2025-07-15 08:22:40');
 
 -- --------------------------------------------------------
 
@@ -184,17 +177,17 @@ CREATE TABLE `ruangan` (
 --
 
 INSERT INTO `ruangan` (`id`, `ruangan`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Ruang Auditorium', 1, '2024-05-16 01:55:32', '2025-01-21 09:08:14'),
-(2, 'Ruang Bakordik', 0, '2024-05-16 01:55:46', '2025-01-21 09:00:32'),
-(3, 'Ruang Komdis', 1, '2024-05-16 01:55:58', '2025-01-21 09:17:13'),
-(4, 'Ruang Komdis (Timur)', 0, '2024-05-20 19:24:05', '2024-07-09 08:49:47'),
+(1, 'Ruang Auditorium', 0, '2024-05-16 01:55:32', '2025-02-18 14:00:00'),
+(2, 'Ruang Bakordik', 0, '2024-05-16 01:55:46', '2025-02-18 14:01:24'),
+(3, 'Ruang Komdis', 0, '2024-05-16 01:55:58', '2025-02-18 14:00:00'),
+(4, 'Ruang Komdis (Timur)', 0, '2024-05-20 19:24:05', '2025-07-12 08:06:04'),
 (5, 'Ruang Komdis (Barat)', 0, '2024-05-20 19:24:18', '2025-01-21 08:31:59'),
-(6, 'Ruang Rapat Lt 5', 1, '2024-05-20 19:24:34', '2025-01-21 09:13:07'),
+(6, 'Ruang Rapat Lt 5', 0, '2024-05-20 19:24:34', '2025-02-18 14:00:00'),
 (7, 'Ruang Rapat Lt 5 (Timur)', 0, '2024-05-20 19:24:48', '2024-07-12 01:46:32'),
-(8, 'Ruang Rapat Lt 5 (Barat)', 0, '2024-05-20 19:25:00', '2025-01-21 09:17:13'),
-(9, 'Studio Lt 6', 0, '2024-05-20 19:25:14', '2025-01-21 09:17:13'),
-(10, 'Ruang Sudjak', 0, '2024-05-20 19:25:27', '2025-01-21 08:50:59'),
-(11, 'Ruangan berkah', 0, '2024-05-28 01:49:39', '2024-07-10 01:30:13');
+(8, 'Ruang Rapat Lt 5 (Barat)', 0, '2024-05-20 19:25:00', '2025-05-05 06:33:30'),
+(9, 'Studio Lt 6', 0, '2024-05-20 19:25:14', '2025-07-12 08:05:12'),
+(10, 'Ruang Sudjak', 0, '2024-05-20 19:25:27', '2025-07-12 06:53:35'),
+(11, 'Ruangan berkah', 0, '2024-05-28 01:49:39', '2025-07-17 15:05:56');
 
 -- --------------------------------------------------------
 
@@ -220,7 +213,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `divisi`, `email`, `role_id`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(8, 'alyana', '', 'nafisyahalyana42@gmail.com', 1, NULL, '$2y$12$1DnAx4n0Tqc80w.efp8oEuQJLPWz2uhvN1Ae57OD8CXGBHpgDgqhy', NULL, '2024-10-18 02:16:06', '2024-10-18 02:16:06'),
+(8, 'alyana', 'SKR', 'nafisyahalyana42@gmail.com', 1, NULL, '$2y$12$1DnAx4n0Tqc80w.efp8oEuQJLPWz2uhvN1Ae57OD8CXGBHpgDgqhy', NULL, '2024-10-18 02:16:06', '2024-10-18 02:16:06'),
 (9, 'rizka', 'Bakordik', '2111501021@student.unisayogya.ac.id', 2, NULL, '$2y$12$wWN2mw7air3pbAdoR6y5oOBPWPvgZoFnKOdgQym5PWBLEhKLdjUbO', NULL, '2025-01-06 08:17:56', '2025-01-06 08:17:56');
 
 --
@@ -289,7 +282,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=267;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=280;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -325,7 +318,7 @@ ALTER TABLE `ruangan`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
