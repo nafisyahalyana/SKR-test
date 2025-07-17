@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Booking;
-use App\Models\ruangan;
+use App\Models\Ruangan;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 
